@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        {% block head %}
+            <meta charset="UTF-8">
+            <title>Twig test</title>
+        {% endblock %}
+
+    </head>
+    <body>
+
+    {%  bufferize %}
+
+        {% block body %}
+
+
+
+        {% endblock body %}
+
+    {%  endbufferize %}
+
+    </body>
+</html>

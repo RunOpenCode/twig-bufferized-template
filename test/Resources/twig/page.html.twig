@@ -1,0 +1,23 @@
+{% extends 'layout.html.twig' %}
+
+{%  block body %}
+    <h1>J. Robert Oppenheimer</h1>
+    <h2>A quote:</h2>
+
+    {% bufferize 10 %}
+        {% include 'include.html.twig' %}
+
+        {% set some_var = 3 %}
+    {% endbufferize %}
+
+    {% bufferize 5 %}
+        {% set some_var = 10 %}
+    {% endbufferize %}
+
+    Some var: {{ some_var }}
+
+    {% embed 'embed.html.twig' %}
+
+    {% endembed %}
+
+{% endblock %}

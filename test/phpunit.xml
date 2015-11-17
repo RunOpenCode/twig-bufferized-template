@@ -1,0 +1,11 @@
+<phpunit>
+
+    <testsuites>
+
+        <testsuite name="Twig">
+            <file>Twig/BufferizeTagTest.php</file>
+        </testsuite>
+
+    </testsuites>
+
+</phpunit>

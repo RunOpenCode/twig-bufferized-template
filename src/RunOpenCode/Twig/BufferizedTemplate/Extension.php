@@ -18,7 +18,6 @@ class Extension extends \Twig_Extension
         $this->settings = array_merge(array(
             'enabled' => true,
             'nodes' => array(),
-            'functions' => array(),
             'whitelist' => array(),
             'blacklist' => array(),
             'bufferManager' => 'RunOpenCode\\Twig\\BufferizedTemplate\\Buffer\\BufferManager',
@@ -26,7 +25,7 @@ class Extension extends \Twig_Extension
             'nodeVisitorPriority' => 10
         ), $settings);
 
-        $this->settings['nodes']['RunOpenCode\\Twig\\BufferizedTemplate\\Tag\\Bufferize\\Node'] = 0;
+        $this->settings['nodes']['RunOpenCode\\Twig\\BufferizedTemplate\\Tag\\Bufferize\\Node'] = $this->settings['defaultExecutionPriority'];
 
         if (count($this->settings['blacklist']) > 0 && count($this->settings['whitelist'])) {
             throw new \InvalidArgumentException('You can use either black list or white list setting or non for bufferizing templates, but not both.');

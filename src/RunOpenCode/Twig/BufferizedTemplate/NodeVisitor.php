@@ -174,7 +174,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node
      * @return bool
      */
-    protected function isBufferizingNode(\Twig_Node $node)
+    protected function isBufferizingNode(\Twig_Node $node = null)
     {
         if (is_null($node)) {
 

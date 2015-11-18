@@ -1,13 +1,28 @@
 <?php
-
+/*
+ * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\Twig\BufferizedTemplate;
 
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node as BufferizeNode;
+use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BaseBufferNode;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferStart;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferEnd;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
 
+/**
+ * Class NodeVisitor
+ *
+ * Parses AST adding buffering tags on required templates.
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate
+ */
 class NodeVisitor extends \Twig_BaseNodeVisitor
 {
     /**
@@ -102,15 +117,14 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
                 return new \Twig_Node(array(
                     new BufferStart($this->settings['defaultExecutionPriority']),
                     $node,
-                    new BufferEnd($this->settings['defaultExecutionPriority'], array(), array('bufferized_execution_priority' => $this->getNodeExecutionPriority($node)))
+                    new BufferEnd($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
                 ));
-
             } elseif ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')])) {
 
                 return new \Twig_Node(array(
                     new BufferStart($this->settings['defaultExecutionPriority']),
                     $node,
-                    new BufferEnd($this->settings['defaultExecutionPriority'], array(), array('bufferized_execution_priority' => $this->getNodeExecutionPriority($node)))
+                    new BufferEnd($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
                 ));
 
             } elseif ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {
@@ -139,7 +153,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
 
 
     /**
-     * Check if current template should be processed with node visitor.
+     * Check if current template should be processed with node visitor based on whitelist or blacklist.
      *
      * @return bool
      */
@@ -165,12 +179,6 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
         if (is_null($node)) {
 
             return false;
-
-        } elseif ($node instanceof \Twig_Node_Expression_Function) {
-
-            if ($node->hasAttribute('name') && in_array($node->getAttribute('name'), $this->settings['functions'])) {
-                return true;
-            }
 
         } else {
 
@@ -222,13 +230,18 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
         return $has;
     }
 
+    /**
+     * Get execution priority of bufferized node.
+     *
+     * Get execution priority of bufferized node based on the node settings or configuration of the extension.
+     *
+     * @param \Twig_Node $node
+     * @return mixed
+     */
     private function getNodeExecutionPriority(\Twig_Node $node)
     {
-        if ($node instanceof BufferizeNode) {
-
-            if (!is_null($node->getPriority())) {
-                return $node->getPriority();
-            }
+        if ($node instanceof BufferizeNode && !is_null($node->getPriority())) {
+            return $node->getPriority();
         }
 
         foreach ($this->settings['nodes'] as $nodeClass => $priority) {

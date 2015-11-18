@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% block head %}
+        <meta charset="UTF-8">
+        <title>Twig test</title>
+    {% endblock %}
+
+</head>
+<body>
+
+{% dummy_tag %}
+
+    {% set some_variable = 20 %}
+
+{% end_dummy_tag %}
+
+{% bufferize 0 %}
+
+{% set some_variable = 5 %}
+
+{% endbufferize %}
+
+{% bufferize 1 %}
+    Some var: {{ some_variable }}
+{% endbufferize %}
+
+</body>
+</html>

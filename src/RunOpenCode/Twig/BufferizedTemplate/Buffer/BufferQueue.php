@@ -1,9 +1,18 @@
 <?php
-
+/*
+ * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
+ *
+ * (c) 2015 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\Twig\BufferizedTemplate\Buffer;
 
 /**
  * Class BufferQueue
+ *
+ * Buffer queue contains list of buffered template portions sorted by execution priority.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Buffer
  */
@@ -19,6 +28,11 @@ final class BufferQueue implements \Countable, \Iterator
         $this->queue = new \SplPriorityQueue();
     }
 
+    /**
+     * Add template buffer to queue.
+     *
+     * @param TemplateBuffer $buffer
+     */
     public function enqueue(TemplateBuffer $buffer)
     {
         $this->queue->insert($buffer, $buffer->getPriority());

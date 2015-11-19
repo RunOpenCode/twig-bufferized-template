@@ -109,7 +109,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
                 }
 
                 $this->shouldBufferize = false;
-                $this->blocks = null;
+                $this->blocks = array();
             }
 
             if ($this->isBufferizingNode($node)) {

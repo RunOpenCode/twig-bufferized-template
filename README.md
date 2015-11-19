@@ -16,6 +16,8 @@ could inflict some global HTML page properties and elements (metadata, javascrip
 and flash messages, etc.)
 - Any Twig`include`, `embed` and similar clause which can inflict some global page properties and elements.
 
+**Important note**: Minimum PHP 5.4 is required for this extension due to heavy usage of `Closure::bind()`
+
 ## Installation
 
 Library is framework agnostic which means that it can be used in any Twig based project, you just have to install it 

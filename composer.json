@@ -4,7 +4,7 @@
   "keywords": ["twig", "twig extension", "output buffer"],
   "type": "library",
   "license": "MIT",
-  "version": "0.0.1-alpha",
+  "version": "1.0.0",
   "authors": [
     {
       "name": "Nikola Svitlica a.k.a TheCelavi",

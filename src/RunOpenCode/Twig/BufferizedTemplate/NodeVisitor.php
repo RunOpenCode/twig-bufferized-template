@@ -216,7 +216,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
 
             if ($this->isBufferizingNode($n)) {
                 return true;
-            } elseif($n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')])) {
+            } elseif ($n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')])) {
                 return true;
             } else {
                 $has = $has || $this->hasBufferizingNode($n);

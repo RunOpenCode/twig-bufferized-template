@@ -20,7 +20,7 @@ class BufferizeTagTest extends \PHPUnit_Framework_TestCase
     protected $environment;
 
     /**
-     * @var \Twig_Loader_Array
+     * @var \Twig_Loader_Filesystem
      */
     protected $loader;
 

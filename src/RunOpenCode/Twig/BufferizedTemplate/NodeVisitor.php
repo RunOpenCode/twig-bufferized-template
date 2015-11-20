@@ -11,8 +11,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate;
 
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node as BufferizeNode;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BaseBufferNode;
-use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferStart;
-use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferEnd;
+use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferBreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
 
@@ -115,16 +114,16 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
             if ($this->isBufferizingNode($node)) {
 
                 return new \Twig_Node(array(
-                    new BufferStart($this->settings['defaultExecutionPriority']),
+                    new BufferBreakPoint($this->settings['defaultExecutionPriority']),
                     $node,
-                    new BufferEnd($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
+                    new BufferBreakPoint($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
                 ));
             } elseif ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')])) {
 
                 return new \Twig_Node(array(
-                    new BufferStart($this->settings['defaultExecutionPriority']),
+                    new BufferBreakPoint($this->settings['defaultExecutionPriority']),
                     $node,
-                    new BufferEnd($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
+                    new BufferBreakPoint($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
                 ));
 
             } elseif ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {

@@ -10,13 +10,13 @@
 namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
 
 /**
- * Class BufferEnd
+ * Class BufferBreakPoint
  *
- * Terminate buffer and start a new one.
+ * Terminate previous buffer and start new one.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer
  */
-final class BufferEnd extends BaseBufferNode
+final class BufferBreakPoint extends BaseBufferNode
 {
     /**
      * {@inheritdoc}

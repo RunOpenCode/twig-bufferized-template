@@ -29,7 +29,7 @@ abstract class BaseBufferNode extends \Twig_Node
         parent::__construct($nodes, $attributes, $lineno, $tag);
     }
 
-    protected function getContextVariableName()
+    public function getContextVariableName()
     {
         return self::CONTEXT_VARIABLE_NAME;
     }

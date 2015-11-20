@@ -8,3 +8,6 @@
 .Spotlight-V100
 .Trashes
 Thumbs.db
+.gitignore
+.idea
+vendor/*

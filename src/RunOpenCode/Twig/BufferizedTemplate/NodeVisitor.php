@@ -75,9 +75,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
 
             if ($node instanceof \Twig_Node_Body) {
                 $this->currentScope = null;
-            }
-
-            if ($node instanceof \Twig_Node_Block) {
+            } elseif ($node instanceof \Twig_Node_Block) {
                 $this->currentScope = $node->getAttribute('name');
             }
         }
@@ -111,14 +109,11 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
                 $this->blocks = array();
             }
 
-            if ($this->isBufferizingNode($node)) {
-
-                return new \Twig_Node(array(
-                    new BufferBreakPoint($this->settings['defaultExecutionPriority']),
-                    $node,
-                    new BufferBreakPoint($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
-                ));
-            } elseif ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')])) {
+            if (
+                $this->isBufferizingNode($node)
+                ||
+                $node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')])
+            ) {
 
                 return new \Twig_Node(array(
                     new BufferBreakPoint($this->settings['defaultExecutionPriority']),
@@ -199,7 +194,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node Node to check.
      * @return bool TRUE if this subtree has bufferizing node.
      */
-    private function hasBufferizingNode(\Twig_Node $node = null)
+    protected function hasBufferizingNode(\Twig_Node $node = null)
     {
         if (is_null($node)) {
             return false;
@@ -213,9 +208,11 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
 
         foreach ($node as $k => $n) {
 
-            if ($this->isBufferizingNode($n)) {
-                return true;
-            } elseif ($n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')])) {
+            if (
+                $this->isBufferizingNode($n)
+                ||
+                $n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')])
+            ) {
                 return true;
             } else {
                 $has = $has || $this->hasBufferizingNode($n);
@@ -237,7 +234,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node
      * @return mixed
      */
-    private function getNodeExecutionPriority(\Twig_Node $node)
+    protected function getNodeExecutionPriority(\Twig_Node $node)
     {
         if ($node instanceof BufferizeNode && !is_null($node->getPriority())) {
             return $node->getPriority();

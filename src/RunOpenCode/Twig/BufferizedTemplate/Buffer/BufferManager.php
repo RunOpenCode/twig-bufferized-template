@@ -9,6 +9,13 @@
  */
 namespace RunOpenCode\Twig\BufferizedTemplate\Buffer;
 
+/**
+ * Class BufferManager
+ *
+ * Buffer manager holds references to Twig template chunks, as well as their execution and rendering order.
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Buffer
+ */
 final class BufferManager
 {
     /**
@@ -84,8 +91,8 @@ final class BufferManager
                 $templateBuffer->execute();
             }
 
-            foreach ($templateBuffers = $this->renderingQueue as $renderer) {
-                $this->output .= (($renderer instanceof TemplateBuffer) ? $renderer->getOutput() : $renderer);
+            foreach ($templateBuffers = $this->renderingQueue as $templateBuffer) {
+                $this->output .= $templateBuffer->getOutput();
             }
         }
 

@@ -109,11 +109,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
                 $this->blocks = array();
             }
 
-            if (
-                $this->isBufferizingNode($node)
-                ||
-                $node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')])
-            ) {
+            if ($this->isBufferizingNode($node) || ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')]))) {
 
                 return new \Twig_Node(array(
                     new BufferBreakPoint($this->settings['defaultExecutionPriority']),
@@ -208,18 +204,10 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
 
         foreach ($node as $k => $n) {
 
-            if (
-                $this->isBufferizingNode($n)
-                ||
-                $n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')])
-            ) {
+            if ($this->isBufferizingNode($n) || ($n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')]))) {
                 return true;
-            } else {
-                $has = $has || $this->hasBufferizingNode($n);
-
-                if ($has) {
-                    return true;
-                }
+            } elseif (($has = $has || $this->hasBufferizingNode($n))) {
+                return true;
             }
         }
 

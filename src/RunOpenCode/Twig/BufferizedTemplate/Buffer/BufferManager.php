@@ -87,11 +87,11 @@ final class BufferManager
             /**
              * @var TemplateBuffer $templateBuffer
              */
-            foreach ($templateBuffers = $this->executionQueue as $templateBuffer) {
+            foreach ($this->executionQueue as $templateBuffer) {
                 $templateBuffer->execute();
             }
 
-            foreach ($templateBuffers = $this->renderingQueue as $templateBuffer) {
+            foreach ($this->renderingQueue as $templateBuffer) {
                 $this->output .= $templateBuffer->getOutput();
             }
         }

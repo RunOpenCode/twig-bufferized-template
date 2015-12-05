@@ -9,5 +9,4 @@
 .Trashes
 Thumbs.db
 .gitignore
-.idea
 vendor/*

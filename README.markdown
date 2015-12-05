@@ -5,6 +5,8 @@
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/RunOpenCode/twig-bufferized-template/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/RunOpenCode/twig-bufferized-template/?branch=master)
 [![Build Status](https://travis-ci.org/RunOpenCode/twig-bufferized-template.svg?branch=master)](https://travis-ci.org/RunOpenCode/twig-bufferized-template)
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/0ed0b759-a315-4e28-9b85-f5186d1c5a84/big.png)](https://insight.sensiolabs.com/projects/0ed0b759-a315-4e28-9b85-f5186d1c5a84)
+
 This library allows you to delay and reorder the execution of certain portions of Twig template. Twig is designed and 
 implemented to execute its template code in linear, top-down order. In majority of use-case scenarios, this is desired
 behavior. However, some edge cases demands that certain portions of template code are executed prior to other portions

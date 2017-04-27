@@ -6,8 +6,6 @@ use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\TokenParser;
 
 class Extension extends \Twig_Extension
 {
-    const NAME = 'bufferized_template_extension';
-
     /**
      * @var array
      */
@@ -60,13 +58,5 @@ class Extension extends \Twig_Extension
     public function createBuffer()
     {
         return new $this->settings['bufferManager']();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getName()
-    {
-        return self::NAME;
     }
 }

@@ -2,17 +2,18 @@
 /*
  * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
  *
- * (c) 2015 RunOpenCode
+ * (c) 2017 RunOpenCode
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
 namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig;
 
+use PHPUnit\Framework\TestCase;
 use RunOpenCode\Twig\BufferizedTemplate\Extension;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigExtension;
 
-class BufferizeTagTest extends \PHPUnit_Framework_TestCase
+class BufferizeTagTest extends TestCase
 {
     /**
      * @var \Twig_Environment

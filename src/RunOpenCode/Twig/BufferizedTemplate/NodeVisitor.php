@@ -2,7 +2,7 @@
 /*
  * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
  *
- * (c) 2015 RunOpenCode
+ * (c) 2017 RunOpenCode
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
@@ -32,7 +32,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
     /**
      * @var string Current template name.
      */
-    protected $filename;
+    protected $templateName;
 
     /**
      * @var bool Denotes if current template body should be bufferized.
@@ -60,7 +60,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
     protected function doEnterNode(\Twig_Node $node, \Twig_Environment $env)
     {
         if ($node instanceof \Twig_Node_Module) {
-            $this->filename = $node->getAttribute('filename');
+            $this->templateName = $node->getTemplateName();
         }
 
         if ($this->shouldProcess()) {
@@ -89,7 +89,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
     protected function doLeaveNode(\Twig_Node $node, \Twig_Environment $env)
     {
         if ($node instanceof \Twig_Node_Module) {
-            $this->filename = null;
+            $this->templateName = null;
         }
 
         if ($this->shouldProcess()) {
@@ -152,9 +152,9 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
         if (count($this->settings['whitelist']) == 0 && count($this->settings['blacklist']) == 0) {
             return true;
         } elseif (count($this->settings['whitelist']) > 0) {
-            return in_array($this->filename, $this->settings['whitelist']);
+            return in_array($this->templateName, $this->settings['whitelist']);
         } else {
-            return !in_array($this->filename, $this->settings['blacklist']);
+            return !in_array($this->templateName, $this->settings['blacklist']);
         }
     }
 

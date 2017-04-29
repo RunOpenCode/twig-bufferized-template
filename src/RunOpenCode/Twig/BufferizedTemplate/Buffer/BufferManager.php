@@ -15,6 +15,8 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Buffer;
  * Buffer manager holds references to Twig template chunks, as well as their execution and rendering order.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Buffer
+ *
+ * @internal
  */
 final class BufferManager
 {

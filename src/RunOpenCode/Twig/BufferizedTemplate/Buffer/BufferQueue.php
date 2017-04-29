@@ -32,10 +32,24 @@ final class BufferQueue implements \Countable, \Iterator
      * Add template buffer to queue.
      *
      * @param TemplateBuffer $buffer
+     *
+     * @return BufferQueue $this
      */
     public function enqueue(TemplateBuffer $buffer)
     {
         $this->queue->insert($buffer, $buffer->getPriority());
+        return $this;
+    }
+
+    /**
+     * Clears queue
+     *
+     * @return BufferQueue $this
+     */
+    public function clear()
+    {
+        $this->queue = new \SplPriorityQueue();
+        return $this;
     }
 
     /**

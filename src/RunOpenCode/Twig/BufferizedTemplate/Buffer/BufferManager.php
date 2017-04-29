@@ -36,8 +36,7 @@ final class BufferManager
     public function __construct()
     {
         $this->executionQueue = new BufferQueue();
-        $this->renderingQueue = array();
-        $this->output = null;
+        $this->renderingQueue = [];
     }
 
     /**
@@ -81,7 +80,8 @@ final class BufferManager
      */
     private function getOutput()
     {
-        if (is_null($this->output)) {
+        if (null === $this->output) {
+
             $this->output = '';
 
             /**

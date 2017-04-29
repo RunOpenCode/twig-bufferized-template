@@ -9,12 +9,16 @@
  */
 namespace RunOpenCode\Twig\BufferizedTemplate\Buffer;
 
+use RunOpenCode\Twig\BufferizedTemplate\Exception\LogicException;
+
 /**
  * Class TemplateBuffer
  *
  * Template buffer is pointer to callable that wraps portion of compiled bufferized Twig template.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Buffer
+ *
+ * {@internal}
  */
 final class TemplateBuffer
 {
@@ -37,7 +41,6 @@ final class TemplateBuffer
     {
         $this->callable = $callable;
         $this->priority = $priority;
-        $this->output = null;
     }
 
     /**
@@ -47,15 +50,10 @@ final class TemplateBuffer
      */
     public function execute()
     {
-        if (is_null($this->output)) {
-
+        if (null === $this->output) {
             ob_start();
-            call_user_func_array($this->callable, array());
+            call_user_func($this->callable);
             $this->output = ob_get_clean();
-
-            if (is_null($this->output)) {
-                $this->output = '';
-            }
         }
 
         return $this;
@@ -78,8 +76,8 @@ final class TemplateBuffer
      */
     public function getOutput()
     {
-        if (is_null($this->output)) {
-            throw new \LogicException('TemplateBuffer output can not be acquired prior to its execution.');
+        if (null === $this->output) {
+            throw new LogicException('TemplateBuffer output can not be acquired prior to its execution.');
         }
 
         return $this->output;

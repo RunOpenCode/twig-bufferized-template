@@ -15,6 +15,8 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  * Base buffer node containing base methods and settings.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer
+ *
+ * @internal
  */
 abstract class BaseBufferNode extends \Twig_Node
 {

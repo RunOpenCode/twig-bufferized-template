@@ -9,12 +9,16 @@
  */
 namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
 
+use RunOpenCode\Twig\BufferizedTemplate\Buffer\BufferManager;
+
 /**
  * Class Initialize
  *
  * Initialize buffer manager and start new buffer.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer
+ *
+ * @internal
  */
 final class Initialize extends BaseBufferNode
 {
@@ -24,12 +28,11 @@ final class Initialize extends BaseBufferNode
     public function compile(\Twig_Compiler $compiler)
     {
         $compiler
-            ->write(sprintf('%s = $this->env->getExtension(\RunOpenCode\Twig\BufferizedTemplate\Extension::class)->createBuffer();', $this->getContextVariableName()))
+            ->write(sprintf('%s = new \\%s();', $this->getContextVariableName(), BufferManager::class))
             ->write("\n");
 
         $compiler
             ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) { ', $this->getContextVariableName()))
             ->write("\n");
-
     }
 }

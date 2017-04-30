@@ -15,10 +15,11 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  * Terminate last buffer and display output.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer
+ *
+ * @internal
  */
 final class Terminate extends BaseBufferNode
 {
-
     /**
      * {@inheritdoc}
      */
@@ -32,5 +33,4 @@ final class Terminate extends BaseBufferNode
             ->write(sprintf('%s->display();', $this->getContextVariableName()))
             ->write("\n");
     }
-
 }

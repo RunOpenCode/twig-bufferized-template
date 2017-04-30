@@ -25,8 +25,10 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize;
  * {% endbufferize %}
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize
+ *
+ * @internal
  */
-class TokenParser extends \Twig_TokenParser
+final class TokenParser extends \Twig_TokenParser
 {
     /**
      * {@inheritdoc}
@@ -41,7 +43,7 @@ class TokenParser extends \Twig_TokenParser
         } elseif ($stream->test(\Twig_Token::OPERATOR_TYPE)) {
             $operator = $stream->next()->getValue();
 
-            if (!in_array($operator, array('-', '+'))) {
+            if (!in_array($operator, array('-', '+'), true)) {
                 throw new \Twig_Error_Syntax(sprintf('Priority can be given as positive and/or negative number, operator "%s" is not allowed.', $operator));
             }
 

@@ -92,37 +92,39 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
             $this->templateName = null;
         }
 
+        $defaultExecutionPriority = $this->settings['default_execution_priority'];
+
         if ($this->shouldProcess()) {
 
             if ($node instanceof \Twig_Node_Module) {
 
                 if ($this->shouldBufferize) {
 
-                    $node->setNode('body', new \Twig_Node(array(
-                        new Initialize($this->settings['defaultExecutionPriority']),
+                    $node->setNode('body', new \Twig_Node([
+                        new Initialize($defaultExecutionPriority),
                         $node->getNode('body'),
-                        new Terminate($this->settings['defaultExecutionPriority'])
-                    )));
+                        new Terminate($defaultExecutionPriority)
+                    ]));
                 }
 
                 $this->shouldBufferize = false;
-                $this->blocks = array();
+                $this->blocks = [];
             }
 
             if ($this->isBufferizingNode($node) || ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')]))) {
 
-                return new \Twig_Node(array(
-                    new BufferBreakPoint($this->settings['defaultExecutionPriority']),
+                return new \Twig_Node([
+                    new BufferBreakPoint($defaultExecutionPriority),
                     $node,
-                    new BufferBreakPoint($this->settings['defaultExecutionPriority'], array(), array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
-                ));
+                    new BufferBreakPoint($defaultExecutionPriority, [], array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
+                ]);
 
             } elseif ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {
 
                 $node->setNode('body', new \Twig_Node(array(
-                    new Initialize($this->settings['defaultExecutionPriority']),
+                    new Initialize($defaultExecutionPriority),
                     $node->getNode('body'),
-                    new Terminate($this->settings['defaultExecutionPriority'])
+                    new Terminate($defaultExecutionPriority)
                 )));
 
                 return $node;
@@ -138,9 +140,8 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      */
     public function getPriority()
     {
-        return $this->settings['nodeVisitorPriority'];
+        return $this->settings['node_visitor_priority'];
     }
-
 
     /**
      * Check if current template should be processed with node visitor based on whitelist or blacklist.
@@ -149,13 +150,15 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      */
     protected function shouldProcess()
     {
-        if (count($this->settings['whitelist']) == 0 && count($this->settings['blacklist']) == 0) {
-            return true;
-        } elseif (count($this->settings['whitelist']) > 0) {
-            return in_array($this->templateName, $this->settings['whitelist']);
-        } else {
-            return !in_array($this->templateName, $this->settings['blacklist']);
+        if (count($this->settings['whitelist']) > 0) {
+            return in_array($this->templateName, $this->settings['whitelist'], true);
         }
+
+        if (count($this->settings['blacklist']) > 0) {
+            return !in_array($this->templateName, $this->settings['blacklist'], true);
+        }
+
+        return true;
     }
 
     /**
@@ -166,19 +169,15 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      */
     protected function isBufferizingNode(\Twig_Node $node = null)
     {
-        if (is_null($node)) {
-
+        if (null === $node) {
             return false;
+        }
 
-        } else {
+        foreach ($this->settings['nodes'] as $nodeClass => $priority) {
 
-            foreach ($this->settings['nodes'] as $nodeClass => $priority) {
-
-                if (is_a($node, $nodeClass)) {
-                    return true;
-                }
+            if ($node instanceof $nodeClass) {
+                return true;
             }
-
         }
 
         return false;
@@ -192,7 +191,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      */
     protected function hasBufferizingNode(\Twig_Node $node = null)
     {
-        if (is_null($node)) {
+        if (null === $node) {
             return false;
         }
 
@@ -202,11 +201,13 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
 
         $has = false;
 
-        foreach ($node as $k => $n) {
+        foreach ($node as $n) {
 
-            if ($this->isBufferizingNode($n) || ($n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')]))) {
-                return true;
-            } elseif (($has |= $this->hasBufferizingNode($n))) {
+            if (
+                ($has |= $this->hasBufferizingNode($n))
+                ||
+                ($n instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$n->getAttribute('name')]))
+            ) {
                 return true;
             }
         }
@@ -224,17 +225,17 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      */
     protected function getNodeExecutionPriority(\Twig_Node $node)
     {
-        if ($node instanceof BufferizeNode && !is_null($node->getPriority())) {
+        if ($node instanceof BufferizeNode && null !== $node->getPriority()) {
             return $node->getPriority();
         }
 
         foreach ($this->settings['nodes'] as $nodeClass => $priority) {
 
-            if (is_a($node, $nodeClass) && !is_null($priority)) {
+            if (null !== $priority && $node instanceof $nodeClass) {
                 return $priority;
             }
         }
 
-        return $this->settings['defaultExecutionPriority'];
+        return $this->settings['default_execution_priority'];
     }
 }

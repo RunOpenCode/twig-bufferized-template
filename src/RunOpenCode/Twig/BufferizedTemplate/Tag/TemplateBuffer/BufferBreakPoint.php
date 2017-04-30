@@ -15,6 +15,8 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  * Terminate previous buffer and start new one.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer
+ *
+ * @internal
  */
 final class BufferBreakPoint extends BaseBufferNode
 {

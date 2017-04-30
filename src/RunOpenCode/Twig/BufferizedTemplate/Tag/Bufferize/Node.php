@@ -15,8 +15,10 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize;
  * Bufferize node denotes node in AST which ought to be buffered.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize
+ *
+ * @internal
  */
-class Node extends \Twig_Node
+final class Node extends \Twig_Node
 {
     /**
      * {@inheritdoc}

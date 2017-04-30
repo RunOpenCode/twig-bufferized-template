@@ -10,11 +10,11 @@
 namespace RunOpenCode\Twig\BufferizedTemplate\Exception;
 
 /**
- * Class LogicException
+ * Class InvalidArgumentException
  *
  * @package RunOpenCode\Twig\BufferizedTemplate\Exception
  */
-class LogicException extends \LogicException implements ExceptionInterface
+class InvalidArgumentException extends \InvalidArgumentException implements ExceptionInterface
 {
 
 }

@@ -21,8 +21,10 @@ use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
  * Parses AST adding buffering tags on required templates.
  *
  * @package RunOpenCode\Twig\BufferizedTemplate
+ *
+ * @internal
  */
-class NodeVisitor extends \Twig_BaseNodeVisitor
+final class NodeVisitor extends \Twig_BaseNodeVisitor
 {
     /**
      * @var array
@@ -148,7 +150,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      *
      * @return bool
      */
-    protected function shouldProcess()
+    private function shouldProcess()
     {
         if (count($this->settings['whitelist']) > 0) {
             return in_array($this->templateName, $this->settings['whitelist'], true);
@@ -167,7 +169,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node
      * @return bool
      */
-    protected function isBufferizingNode(\Twig_Node $node = null)
+    private function isBufferizingNode(\Twig_Node $node = null)
     {
         if (null === $node) {
             return false;
@@ -189,7 +191,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node Node to check.
      * @return bool TRUE if this subtree has bufferizing node.
      */
-    protected function hasBufferizingNode(\Twig_Node $node = null)
+    private function hasBufferizingNode(\Twig_Node $node = null)
     {
         if (null === $node) {
             return false;
@@ -223,7 +225,7 @@ class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node
      * @return mixed
      */
-    protected function getNodeExecutionPriority(\Twig_Node $node)
+    private function getNodeExecutionPriority(\Twig_Node $node)
     {
         if ($node instanceof BufferizeNode && null !== $node->getPriority()) {
             return $node->getPriority();

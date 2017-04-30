@@ -5,12 +5,12 @@
            xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="roc.twig.bufferized_template.class">RunOpenCode\Twig\BufferizedTemplate\Extension</parameter>
+        <parameter key="runopencode.twig.bufferized_template.class">RunOpenCode\Twig\BufferizedTemplate\TwigExtension</parameter>
     </parameters>
 
     <services>
 
-        <service id="roc.twig.bufferized_template" class="%roc.twig.bufferized_template.class%" public="false">
+        <service id="runopencode.twig.bufferized_template" class="%runopencode.twig.bufferized_template.class%" public="false">
             <argument type="collection" />
             <tag name="twig.extension" />
         </service>

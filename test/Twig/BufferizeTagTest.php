@@ -10,7 +10,7 @@
 namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig;
 
 use PHPUnit\Framework\TestCase;
-use RunOpenCode\Twig\BufferizedTemplate\Extension;
+use RunOpenCode\Twig\BufferizedTemplate\TwigExtension;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigExtension;
 
 class BufferizeTagTest extends TestCase
@@ -33,7 +33,7 @@ class BufferizeTagTest extends TestCase
 
         $this->environment = new \Twig_Environment($this->loader, array());
 
-        $this->environment->addExtension(new Extension(array(
+        $this->environment->addExtension(new TwigExtension(array(
             'nodes' => array(
                 'RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigNode' => 20
             )

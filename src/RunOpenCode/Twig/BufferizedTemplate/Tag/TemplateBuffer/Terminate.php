@@ -18,7 +18,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  *
  * @internal
  */
-final class Terminate extends BaseBufferNode
+final class Terminate extends AbstractBufferNode
 {
     /**
      * {@inheritdoc}

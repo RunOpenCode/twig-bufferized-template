@@ -10,7 +10,7 @@
 namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
 
 /**
- * Class BaseBufferNode
+ * Class AbstractBufferNode
  *
  * Base buffer node containing base methods and settings.
  *
@@ -18,28 +18,49 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  *
  * @internal
  */
-abstract class BaseBufferNode extends \Twig_Node
+abstract class AbstractBufferNode extends \Twig_Node
 {
-    const CONTEXT_VARIABLE_NAME = '$_________run_open_code_twig_bufferized_template_environment_variable_______iByUtNtcGcwrjomGoxjFQNuKmmOSVpZjLuKersvpdImnPTfXsCrfWXNrkpTV';
-    const BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME = 'bufferized_execution_priority';
-
+    /**
+     * Default execution priority
+     *
+     * @var int
+     */
     private $defaultExecutionPriority;
 
+    /**
+     * AbstractBufferNode constructor.
+     *
+     * @param int $defaultExecutionPriority
+     * @param array $nodes
+     * @param array $attributes
+     * @param int $lineno
+     * @param null|string $tag
+     */
     public function __construct($defaultExecutionPriority, array $nodes = array(), array $attributes = array(), $lineno = 0, $tag = null)
     {
         $this->defaultExecutionPriority = $defaultExecutionPriority;
         parent::__construct($nodes, $attributes, $lineno, $tag);
     }
 
+    /**
+     * Get context random variable name.
+     *
+     * @return string
+     */
     public function getContextVariableName()
     {
-        return self::CONTEXT_VARIABLE_NAME;
+        return '$_________runopencode_twig_bufferized_template_environment_variable_______iByUtNtcGcwrjomGoxjFQNuKmmOSVpZjLuKersvpdImnPTfXsCrfWXNrkpTV';
     }
 
+    /**
+     * Get execution priority.
+     *
+     * @return int
+     */
     public function getExecutionPriority()
     {
-        if ($this->hasAttribute(self::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME)) {
-            return $this->getAttribute(self::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME);
+        if ($this->hasAttribute('bufferized_execution_priority')) {
+            return $this->getAttribute('bufferized_execution_priority');
         }
 
         return $this->defaultExecutionPriority;

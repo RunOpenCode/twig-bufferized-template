@@ -20,7 +20,7 @@ use RunOpenCode\Twig\BufferizedTemplate\Buffer\BufferManager;
  *
  * @internal
  */
-final class Initialize extends BaseBufferNode
+final class Initialize extends AbstractBufferNode
 {
     /**
      * {@inheritdoc}

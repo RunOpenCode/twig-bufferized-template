@@ -10,7 +10,6 @@
 namespace RunOpenCode\Twig\BufferizedTemplate;
 
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node as BufferizeNode;
-use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BaseBufferNode;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferBreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
@@ -118,16 +117,16 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
                 return new \Twig_Node([
                     new BufferBreakPoint($defaultExecutionPriority),
                     $node,
-                    new BufferBreakPoint($defaultExecutionPriority, [], array(BaseBufferNode::BUFFERIZED_EXECUTION_PRIORITY_ATTRIBUTE_NAME => $this->getNodeExecutionPriority($node)))
+                    new BufferBreakPoint($defaultExecutionPriority, [], ['bufferized_execution_priority' => $this->getNodeExecutionPriority($node)])
                 ]);
 
             } elseif ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {
 
-                $node->setNode('body', new \Twig_Node(array(
+                $node->setNode('body', new \Twig_Node([
                     new Initialize($defaultExecutionPriority),
                     $node->getNode('body'),
                     new Terminate($defaultExecutionPriority)
-                )));
+                ]));
 
                 return $node;
             }
@@ -169,12 +168,8 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node
      * @return bool
      */
-    private function isBufferizingNode(\Twig_Node $node = null)
+    private function isBufferizingNode(\Twig_Node $node)
     {
-        if (null === $node) {
-            return false;
-        }
-
         foreach ($this->settings['nodes'] as $nodeClass => $priority) {
 
             if ($node instanceof $nodeClass) {
@@ -191,12 +186,8 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
      * @param \Twig_Node $node Node to check.
      * @return bool TRUE if this subtree has bufferizing node.
      */
-    private function hasBufferizingNode(\Twig_Node $node = null)
+    private function hasBufferizingNode(\Twig_Node $node)
     {
-        if (null === $node) {
-            return false;
-        }
-
         if ($this->isBufferizingNode($node)) {
             return true;
         }

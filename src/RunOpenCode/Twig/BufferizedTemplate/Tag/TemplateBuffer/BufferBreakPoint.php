@@ -18,7 +18,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  *
  * @internal
  */
-final class BufferBreakPoint extends BaseBufferNode
+final class BufferBreakPoint extends AbstractBufferNode
 {
     /**
      * {@inheritdoc}

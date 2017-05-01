@@ -19,9 +19,7 @@ to, are presented below:
 - Block-like CMS CMF systems (like Sonata project) where layout wraps execution of independent, standalone blocks which
 could inflict some global HTML page properties and elements (metadata, javascript and stylesheet inclusions, global error 
 and flash messages, etc.)
-- Any Twig`include`, `embed` and similar clause which can inflict some global page properties and elements.
-
-**Important note**: Minimum PHP 5.4 is required for this extension due to heavy usage of `Closure::bind()`
+- Any Twig `include`, `embed` and similar clause which can inflict some global page properties and elements.
 
 ## Installation
 
@@ -34,16 +32,14 @@ default settings):
 
 
     $settings = array(
-                          'enabled' => true,
-                          'nodes' => array(),
-                          'whitelist' => array(),
-                          'blacklist' => array(),
-                          'bufferManager' => 'RunOpenCode\\Twig\\BufferizedTemplate\\Buffer\\BufferManager',
-                          'defaultExecutionPriority' => 0,
-                          'nodeVisitorPriority' => 10
+                          'nodes' => [ ],
+                          'whitelist' => [ ],
+                          'blacklist' => [ ],
+                          'default_execution_priority' => 0,
+                          'node_visitor_priority' => 10
                     );
                    
-    $myTwigEnvironment->addExtension(new \RunOpenCode\Twig\BufferizedTemplate\Extension($settings)); 
+    $myTwigEnvironment->addExtension(new \RunOpenCode\Twig\BufferizedTemplate\TwigExtension($settings));
 
 If you are satisfied with default settings, you can omit settings from extension constructor, or you can tune up only
 desired configuration parameters, since settings are resolved by using `array_merge` function.
@@ -70,18 +66,16 @@ and if you are not satisfied with default extension configuration, you can confi
 in example below, default configuration is presented):
             
     run_open_code_twig_bufferized_template:
-        enabled: true
         nodes: []
         whitelist: []
         blacklist: []
-        bufferManager: RunOpenCode\\Twig\\BufferizedTemplate\\Buffer\\BufferManager
-        defaultExecutionPriority: 0
+        default_execution_priority: 0
         nodeVisitorPriority: 0
         
 ## How to use extension?
         
 Extension comes with prebuilt Twig tag `{% bufferize [priority] %}`. Tag parameter `priority` is optional, and if ommited,
-value from `defaultExecutionPriority` configuration setting is used. If you want to rearrange order of execution of some 
+value from `default_execution_priority` configuration setting is used. If you want to rearrange order of execution of some
 portions of your Twig template, wrap it with `{% bufferize %}` and `{% endbufferize %}` tag, example:
  
     <!doctype html>
@@ -107,7 +101,7 @@ portions of your Twig template, wrap it with `{% bufferize %}` and `{% endbuffer
                 
         {% endbufferize %}
                         
-        ..and everything else is rendered in between - if parameter "defaultExecutionPriority" is between (-10, 10)
+        ..and everything else is rendered in between - if parameter "default_execution_priority" is between (-10, 10)
                         
         </body>
     </html>
@@ -119,7 +113,7 @@ context.
 ## Bufferize existing Twig nodes
 
 If you have some custom tags that needs to be bufferized by default, you can wrap arround that tags with `{% bufferize %}`
-and `{%  endbufferize %}` tags. However, you can do that automatically by configuring extension to bufferize your nodes
+and `{%  endbufferize %}` tags. However, you can do that automatically by configuring extension to bufferize your tags
 by default. In order to achieve that, configure extension parameter `nodes` by adding array of full qualified class name
 as array key and execution priority as array value, example:
 
@@ -132,13 +126,11 @@ Note that bufferization will only work for Twig tags. Don't use it for bufferiza
  
 ## Other configuration parameters
 
-- `enabled`: Enable/disable node visitor to process bufferized nodes. If you have used `{% bufferize %}` tag, it will be just ignored.
 - `nodes`: Add other custom Twig tag nodes to template bufferization.
 - `whitelist`: By default, all templates are analysed for bufferization. You can explicitly state which templates should be processed with node visitor, others will be ignored. 
 - `blacklist`: This parameter is oposite of `whitelist`, here you can state which templates should be ignored. You can use either `whitelist` or `blacklist`, but not booth.
-- `bufferManager`: If you need different implementation of buffering execution, you can state FQCN which should be used as buffer manager.
-- `defaultExecutionPriority`: Default execution priority of all bufferized template chunks.
-- `nodeVisitorPriority`: Twig defines priority of node visitors, which ought to be between [-10, 10]. By using value of 10, bufferizing node visitor will be executed as last node visitor
+- `default_execution_priority`: Default execution priority of all bufferized template chunks.
+- `node_visitor_priority`: Twig defines priority of node visitors, which ought to be between [-10, 10]. By using value of 10, bufferizing node visitor will be executed as last node visitor
 in process of transforming AST, which is desired behaviour. However, if you need different priority, you can configure that here.
 
 ## How bufferization works?
@@ -197,7 +189,7 @@ note `{{ sonata_block_include_stylesheets('screen', app.request.basePath) }}` at
 where they should be - in HEAD tag.
 
 Bufferization could provide method for Sonata project (or any other block-like CMS CMF) proper HTML output and full 
-separation of individual block logic that is related to assets management and injection.
+separation of individual block logic that is related to assets management and inclusion.
 
 
 

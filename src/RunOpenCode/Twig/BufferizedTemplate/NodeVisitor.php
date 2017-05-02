@@ -73,12 +73,14 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
             }
 
             if ($node instanceof \Twig_Node_Module) {
-                $this->blocks = $node->getNode('blocks')->getIterator()->getArrayCopy();
+                $this->blocks = $node->getNode('blocks')->getIterator();
             }
 
             if ($node instanceof \Twig_Node_Body) {
                 $this->currentScope = null;
-            } elseif ($node instanceof \Twig_Node_Block) {
+            }
+
+            if ($node instanceof \Twig_Node_Block) {
                 $this->currentScope = $node->getAttribute('name');
             }
         }
@@ -132,7 +134,9 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
                     ])
                 ]);
 
-            } elseif ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {
+            }
+
+            if ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {
 
                 $node->setNode('body', new \Twig_Node([
                     new Initialize([], [

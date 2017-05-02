@@ -19,7 +19,7 @@ to, are presented below:
 - Block-like CMS CMF systems (like Sonata project) where layout wraps execution of independent, standalone blocks which
 could inflict some global HTML page properties and elements (metadata, javascript and stylesheet inclusions, global error 
 and flash messages, etc.)
-- Any Twig `include`, `embed` and similar clause which can inflict some global page properties and elements.
+- Any Twig `include`, `embed` and similar statements which can inflict some global page properties and elements.
 
 ## Installation
 
@@ -31,13 +31,13 @@ you have to register Twig Bufferized template extension to your Twig environment
 default settings): 
 
 
-    $settings = array(
-                          'nodes' => [ ],
-                          'whitelist' => [ ],
-                          'blacklist' => [ ],
-                          'default_execution_priority' => 0,
-                          'node_visitor_priority' => 10
-                    );
+    $settings = [
+        'nodes' => [ ],
+        'whitelist' => [ ],
+        'blacklist' => [ ],
+        'default_execution_priority' => 0,
+        'node_visitor_priority' => 10
+    ];
                    
     $myTwigEnvironment->addExtension(new \RunOpenCode\Twig\BufferizedTemplate\TwigExtension($settings));
 
@@ -122,7 +122,9 @@ as array key and execution priority as array value, example:
             - Full\Qualified\Class\Name\To\My\Node: 50
             - Full\Qualified\Class\Name\To\My\OtherNode: -5
             
-Note that bufferization will only work for Twig tags. Don't use it for bufferization of functions or tests.
+List of custom nodes to bufferize can be provided as plain array of strings without priorities.
+In that case, those nodes would get priority from configured `default_execution_priority`.
+Bufferization will only work for Twig tags. Don't use it for bufferization of functions or tests.
  
 ## Other configuration parameters
 

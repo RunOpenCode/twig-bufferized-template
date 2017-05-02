@@ -10,6 +10,7 @@
 namespace RunOpenCode\Twig\BufferizedTemplate;
 
 use RunOpenCode\Twig\BufferizedTemplate\Exception\InvalidArgumentException;
+use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\TokenParser;
 
 /**
@@ -34,7 +35,25 @@ class TwigExtension extends \Twig_Extension
             'node_visitor_priority' => 10
         ), $settings);
 
-        $this->settings['nodes']['RunOpenCode\\Twig\\BufferizedTemplate\\Tag\\Bufferize\\Node'] = $this->settings['default_execution_priority'];
+        $this->settings['nodes'][Node::class] = null;
+
+        $this->settings['nodes'] = call_user_func(function($nodes) {
+
+            $processed = [];
+
+            foreach ($nodes as $fqcn => $priority) {
+
+                if (is_string($priority) && class_exists($priority)) {
+                    $fqcn = $priority;
+                    $priority = null;
+                }
+
+                $processed[$fqcn] = $priority;
+            }
+
+            return $processed;
+
+        }, $this->settings['nodes']);
 
         if (count($this->settings['blacklist']) > 0 && count($this->settings['whitelist'])) {
             throw new InvalidArgumentException('You can use either black list or white list setting or non for bufferizing templates, but not both.');

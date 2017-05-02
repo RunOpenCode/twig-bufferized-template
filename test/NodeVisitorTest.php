@@ -15,6 +15,8 @@ use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferBreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
+use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigExtension;
+use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigNode;
 use RunOpenCode\Twig\BufferizedTemplate\TwigExtension;
 
 /**
@@ -53,6 +55,44 @@ class NodeVisitorTest extends TestCase
     /**
      * @test
      */
+    public function itBufferizesCustomConfiguredTags()
+    {
+        $env = new \Twig_Environment($this->getMockBuilder(\Twig_LoaderInterface::class)->getMock(), ['cache' => false, 'autoescape' => false]);
+        $env->addExtension(new DummyTwigExtension());
+        $env->addExtension(new TwigExtension([
+            'default_execution_priority' => 20,
+            'nodes' => [
+                DummyTwigNode::class => 5
+            ]
+        ]));
+
+        $stream = $env->parse($env->tokenize(new \Twig_Source('{% dummy_tag %}Content{% end_dummy_tag %}', 'page')));
+        $priority = $stream->getNode('body')->getNode(1)->getNode(0)->getNode(2)->getAttribute('bufferized_execution_priority');
+
+        $this->assertEquals(5, $priority);
+    }
+
+    /**
+     * @test
+     */
+    public function itBufferizesCustomConfiguredTagsWithDefaultPriority()
+    {
+        $env = new \Twig_Environment($this->getMockBuilder(\Twig_LoaderInterface::class)->getMock(), ['cache' => false, 'autoescape' => false]);
+        $env->addExtension(new DummyTwigExtension());
+        $env->addExtension(new TwigExtension([
+            'default_execution_priority' => 20,
+            'nodes' => [ DummyTwigNode::class ]
+        ]));
+
+        $stream = $env->parse($env->tokenize(new \Twig_Source('{% dummy_tag %}Content{% end_dummy_tag %}', 'page')));
+        $priority = $stream->getNode('body')->getNode(1)->getNode(0)->getNode(2)->getAttribute('bufferized_execution_priority');
+
+        $this->assertEquals(20, $priority);
+    }
+
+    /**
+     * @test
+     */
     public function itSkipsBlacklisted()
     {
         $env = new \Twig_Environment($this->getMockBuilder(\Twig_LoaderInterface::class)->getMock(), ['cache' => false, 'autoescape' => false]);
@@ -78,7 +118,7 @@ class NodeVisitorTest extends TestCase
                 'whitelist' => ['other_page']
             ]));
 
-        $stream = $env->parse($env->tokenize(new \Twig_Source('{% bufferize 10 %}Content{% endbufferize %}', 'page')));
+        $stream = $env->parse($env->tokenize(new \Twig_Source('{% bufferize %}Content{% endbufferize %}', 'page')));
         $node = $stream->getNode('body');
 
         $this->assertInstanceOf(Node::class, $node->getNode(0));

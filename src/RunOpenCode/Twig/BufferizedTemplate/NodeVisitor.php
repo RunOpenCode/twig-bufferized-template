@@ -214,6 +214,7 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
      * Get execution priority of bufferized node based on the node settings or configuration of the extension.
      *
      * @param \Twig_Node $node
+     *
      * @return mixed
      */
     private function getNodeExecutionPriority(\Twig_Node $node)

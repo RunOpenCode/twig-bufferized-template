@@ -25,6 +25,8 @@ final class Terminate extends AbstractBufferNode
      */
     public function compile(\Twig_Compiler $compiler)
     {
+        $compiler->addDebugInfo($this);
+
         $compiler
             ->write(sprintf('}, $this), %s);', $this->getExecutionPriority()))
             ->write("\n");

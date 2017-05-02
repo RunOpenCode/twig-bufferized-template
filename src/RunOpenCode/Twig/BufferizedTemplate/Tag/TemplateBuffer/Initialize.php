@@ -27,12 +27,14 @@ final class Initialize extends AbstractBufferNode
      */
     public function compile(\Twig_Compiler $compiler)
     {
+        $compiler->addDebugInfo($this);
+
         $compiler
             ->write(sprintf('%s = new \\%s();', $this->getContextVariableName(), BufferManager::class))
             ->write("\n");
 
         $compiler
-            ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) { ', $this->getContextVariableName()))
+            ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) {', $this->getContextVariableName()))
             ->write("\n");
     }
 }

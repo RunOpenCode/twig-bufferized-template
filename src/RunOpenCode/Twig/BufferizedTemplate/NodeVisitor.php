@@ -25,6 +25,8 @@ use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
  */
 final class NodeVisitor extends \Twig_BaseNodeVisitor
 {
+    const CONTEXT_VARIABLE_NAME = '$_________runopencode_twig_bufferized_template_environment_variable_______iByUtNtcGcwrjomGoxjFQNuKmmOSVpZjLuKersvpdImnPTfXsCrfWXNrkpTV';
+
     /**
      * @var array
      */
@@ -93,7 +95,6 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
             $this->templateName = null;
         }
 
-        $defaultExecutionPriority = $this->settings['default_execution_priority'];
 
         if ($this->shouldProcess()) {
 
@@ -102,9 +103,14 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
                 if ($this->shouldBufferize) {
 
                     $node->setNode('body', new \Twig_Node([
-                        new Initialize($defaultExecutionPriority),
+                        new Initialize([], [
+                            'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME
+                        ]),
                         $node->getNode('body'),
-                        new Terminate($defaultExecutionPriority)
+                        new Terminate([], [
+                            'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME,
+                            'execution_priority' => $this->settings['default_execution_priority']
+                        ])
                     ]));
                 }
 
@@ -115,17 +121,28 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
             if ($this->isBufferizingNode($node) || ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')]))) {
 
                 return new \Twig_Node([
-                    new BufferBreakPoint($defaultExecutionPriority),
+                    new BufferBreakPoint([], [
+                        'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME,
+                        'execution_priority' => $this->settings['default_execution_priority']
+                    ]),
                     $node,
-                    new BufferBreakPoint($defaultExecutionPriority, [], ['bufferized_execution_priority' => $this->getNodeExecutionPriority($node)])
+                    new BufferBreakPoint([], [
+                        'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME,
+                        'execution_priority' => $this->getNodeExecutionPriority($node)
+                    ])
                 ]);
 
             } elseif ($this->currentScope && $node instanceof \Twig_Node_Block && $this->hasBufferizingNode($node)) {
 
                 $node->setNode('body', new \Twig_Node([
-                    new Initialize($defaultExecutionPriority),
+                    new Initialize([], [
+                        'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME
+                    ]),
                     $node->getNode('body'),
-                    new Terminate($defaultExecutionPriority)
+                    new Terminate([], [
+                        'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME,
+                        'execution_priority' => $this->settings['default_execution_priority']
+                    ])
                 ]));
 
                 return $node;
@@ -219,8 +236,8 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
      */
     private function getNodeExecutionPriority(\Twig_Node $node)
     {
-        if ($node instanceof BufferizeNode && null !== $node->getPriority()) {
-            return $node->getPriority();
+        if ($node instanceof BufferizeNode && null !== $node->getExecutionPriority()) {
+            return $node->getExecutionPriority();
         }
 
         foreach ($this->settings['nodes'] as $nodeClass => $priority) {

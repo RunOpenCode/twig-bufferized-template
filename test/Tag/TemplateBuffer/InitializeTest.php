@@ -19,7 +19,7 @@ class InitializeTest extends BaseNodeTest
      */
     public function itCompiles()
     {
-        $node = new Initialize(0);
+        $node = new Initialize([], ['bufferized_context_variable_name' => '$_bufferized_context_variable_name']);
 
         $compiler = $this->getCompiler();
         $compiler->compile($node);
@@ -32,6 +32,6 @@ class InitializeTest extends BaseNodeTest
 
 EOF;
 
-        $this->assertEquals(str_replace('{{ bufferize_variable }}', $node->getContextVariableName(), $expected), $source);
+        $this->assertEquals(str_replace('{{ bufferize_variable }}', $node->getAttribute('bufferized_context_variable_name'), $expected), $source);
     }
 }

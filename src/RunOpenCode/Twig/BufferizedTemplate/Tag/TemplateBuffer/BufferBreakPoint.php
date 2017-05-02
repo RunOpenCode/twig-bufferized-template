@@ -18,7 +18,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  *
  * @internal
  */
-final class BufferBreakPoint extends AbstractBufferNode
+final class BufferBreakPoint extends \Twig_Node
 {
     /**
      * {@inheritdoc}
@@ -26,11 +26,11 @@ final class BufferBreakPoint extends AbstractBufferNode
     public function compile(\Twig_Compiler $compiler)
     {
         $compiler
-            ->write(sprintf('}, $this), %s);', $this->getExecutionPriority()))
+            ->write(sprintf('}, $this), %s);', $this->getAttribute('execution_priority')))
             ->write("\n");
 
         $compiler
-            ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) { ', $this->getContextVariableName()))
+            ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) { ', $this->getAttribute('bufferized_context_variable_name')))
             ->write("\n");
     }
 }

@@ -32,8 +32,8 @@ final class Node extends \Twig_Node
         $compiler->subcompile($this->getNode('body'));
     }
 
-    public function getPriority()
+    public function getExecutionPriority()
     {
-        return $this->getAttribute('priority');
+        return $this->getAttribute('execution_priority');
     }
 }

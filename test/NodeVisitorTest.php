@@ -44,10 +44,10 @@ class NodeVisitorTest extends TestCase
         $body = $body->getNode(0);
 
         $this->assertInstanceOf(BufferBreakPoint::class, $defaultPriorityNode = $body->getNode(0));
-        $this->assertFalse($defaultPriorityNode->hasAttribute('bufferized_execution_priority'));
+        $this->assertEquals(0, $defaultPriorityNode->getAttribute('execution_priority'));
         $this->assertInstanceOf(Node::class, $body->getNode(1));
         $this->assertInstanceOf(BufferBreakPoint::class, $priorityNode = $body->getNode(2));
-        $this->assertEquals(10, $priorityNode->getAttribute('bufferized_execution_priority'));
+        $this->assertEquals(10, $priorityNode->getAttribute('execution_priority'));
 
         $this->assertInstanceOf(Terminate::class, $node->getNode(2));
     }
@@ -67,7 +67,7 @@ class NodeVisitorTest extends TestCase
         ]));
 
         $stream = $env->parse($env->tokenize(new \Twig_Source('{% dummy_tag %}Content{% end_dummy_tag %}', 'page')));
-        $priority = $stream->getNode('body')->getNode(1)->getNode(0)->getNode(2)->getAttribute('bufferized_execution_priority');
+        $priority = $stream->getNode('body')->getNode(1)->getNode(0)->getNode(2)->getAttribute('execution_priority');
 
         $this->assertEquals(5, $priority);
     }
@@ -85,7 +85,7 @@ class NodeVisitorTest extends TestCase
         ]));
 
         $stream = $env->parse($env->tokenize(new \Twig_Source('{% dummy_tag %}Content{% end_dummy_tag %}', 'page')));
-        $priority = $stream->getNode('body')->getNode(1)->getNode(0)->getNode(2)->getAttribute('bufferized_execution_priority');
+        $priority = $stream->getNode('body')->getNode(1)->getNode(0)->getNode(2)->getAttribute('execution_priority');
 
         $this->assertEquals(20, $priority);
     }

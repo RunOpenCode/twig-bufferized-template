@@ -19,7 +19,7 @@ class BufferBreakPointTest extends BaseNodeTest
      */
     public function itCompiles()
     {
-        $node = new BufferBreakPoint(20);
+        $node = new BufferBreakPoint([], ['execution_priority' => 20, 'bufferized_context_variable_name' => '$_bufferized_context_variable_name']);
 
         $compiler = $this->getCompiler();
         $compiler->compile($node);
@@ -32,6 +32,6 @@ class BufferBreakPointTest extends BaseNodeTest
 
 EOF;
 
-        $this->assertEquals(str_replace('{{ bufferize_variable }}', $node->getContextVariableName(), $expected), $source);
+        $this->assertEquals(str_replace('{{ bufferize_variable }}', $node->getAttribute('bufferized_context_variable_name'), $expected), $source);
     }
 }

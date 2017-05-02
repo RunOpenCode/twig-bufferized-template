@@ -19,7 +19,7 @@ class TerminateTest extends BaseNodeTest
      */
     public function itCompiles()
     {
-        $node = new Terminate(20);
+        $node = new Terminate([], ['bufferized_context_variable_name' => '$_bufferized_context_variable_name', 'execution_priority' => 20]);
 
         $compiler = $this->getCompiler();
         $compiler->compile($node);
@@ -32,6 +32,6 @@ class TerminateTest extends BaseNodeTest
 
 EOF;
 
-        $this->assertEquals(str_replace('{{ bufferize_variable }}', $node->getContextVariableName(), $expected), $source);
+        $this->assertEquals(str_replace('{{ bufferize_variable }}', $node->getAttribute('bufferized_context_variable_name'), $expected), $source);
     }
 }

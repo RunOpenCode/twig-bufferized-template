@@ -20,7 +20,7 @@ use RunOpenCode\Twig\BufferizedTemplate\Buffer\BufferManager;
  *
  * @internal
  */
-final class Initialize extends AbstractBufferNode
+final class Initialize extends \Twig_Node
 {
     /**
      * {@inheritdoc}
@@ -30,11 +30,11 @@ final class Initialize extends AbstractBufferNode
         $compiler->addDebugInfo($this);
 
         $compiler
-            ->write(sprintf('%s = new \\%s();', $this->getContextVariableName(), BufferManager::class))
+            ->write(sprintf('%s = new \\%s();', $this->getAttribute('bufferized_context_variable_name'), BufferManager::class))
             ->write("\n");
 
         $compiler
-            ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) {', $this->getContextVariableName()))
+            ->write(sprintf('%s->bufferize(Closure::bind(function() use (&$context, &$blocks) {', $this->getAttribute('bufferized_context_variable_name')))
             ->write("\n");
     }
 }

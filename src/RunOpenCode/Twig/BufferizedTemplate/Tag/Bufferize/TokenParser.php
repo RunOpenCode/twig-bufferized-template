@@ -61,7 +61,7 @@ final class TokenParser extends \Twig_TokenParser
         $body = $this->parser->subparse(array($this, 'decideBufferizeEnd'), true);
         $stream->expect(\Twig_Token::BLOCK_END_TYPE);
 
-        return new Node(array('body' => $body), array('priority' => $priority), $lineno, $this->getTag());
+        return new Node(array('body' => $body), array('execution_priority' => $priority), $lineno, $this->getTag());
     }
 
     public function decideBufferizeEnd(\Twig_Token $token)

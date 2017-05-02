@@ -18,7 +18,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  *
  * @internal
  */
-final class Terminate extends AbstractBufferNode
+final class Terminate extends \Twig_Node
 {
     /**
      * {@inheritdoc}
@@ -28,11 +28,11 @@ final class Terminate extends AbstractBufferNode
         $compiler->addDebugInfo($this);
 
         $compiler
-            ->write(sprintf('}, $this), %s);', $this->getExecutionPriority()))
+            ->write(sprintf('}, $this), %s);', $this->getAttribute('execution_priority')))
             ->write("\n");
 
         $compiler
-            ->write(sprintf('%s->display();', $this->getContextVariableName()))
+            ->write(sprintf('%s->display();', $this->getAttribute('bufferized_context_variable_name')))
             ->write("\n");
     }
 }

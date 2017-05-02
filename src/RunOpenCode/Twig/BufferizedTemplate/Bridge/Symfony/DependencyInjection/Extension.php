@@ -21,9 +21,13 @@ class Extension extends BaseExtension
         $loader->load('twig.extension.xml');
 
 
-        if ($container->hasDefinition('roc.twig.bufferized_template')) {
-            $definition = $container->getDefinition('roc.twig.bufferized_template');
-            $definition->setArguments(array($config));
+        if ($container->hasDefinition('runopencode.twig.bufferized_template')) {
+
+            $container
+                ->getDefinition('runopencode.twig.bufferized_template')
+                ->setArguments([
+                    $config
+                ]);
         }
     }
 
@@ -48,7 +52,7 @@ class Extension extends BaseExtension
      */
     public function getAlias()
     {
-        return "run_open_code_twig_bufferized_template";
+        return "runopencode_twig_bufferized_template";
     }
 
 }

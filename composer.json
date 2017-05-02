@@ -40,6 +40,7 @@
         "phpmd/phpmd" : "@stable",
         "sebastian/phpcpd": "dev-master",
         "theseer/phpdox": "dev-master",
-        "escapestudios/symfony2-coding-standard": "~2.0"
+        "escapestudios/symfony2-coding-standard": "~2.0",
+        "symfony/symfony": "~2.8|~3.0"
     }
 }

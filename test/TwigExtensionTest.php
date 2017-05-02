@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
  *

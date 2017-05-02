@@ -55,7 +55,7 @@ bundle in your `AppKernel`:
         {
             $bundles = array(
                 [... YOUR BUNDLES...],
-                new RunOpenCode\Twig\BufferizedTemplate\Bridge\Symfony\RunOpenCodeTwigBufferizedTemplateBundle()
+                new RunOpenCode\Twig\BufferizedTemplate\Bridge\Symfony\TwigBufferizedTemplateBundle()
             );
                 
             return $bundles;

@@ -12,7 +12,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig;
 
 use PHPUnit\Framework\TestCase;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node;
-use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferBreakPoint;
+use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigExtension;
@@ -43,10 +43,10 @@ class NodeVisitorTest extends TestCase
 
         $body = $body->getNode(0);
 
-        $this->assertInstanceOf(BufferBreakPoint::class, $defaultPriorityNode = $body->getNode(0));
+        $this->assertInstanceOf(BreakPoint::class, $defaultPriorityNode = $body->getNode(0));
         $this->assertEquals(0, $defaultPriorityNode->getAttribute('execution_priority'));
         $this->assertInstanceOf(Node::class, $body->getNode(1));
-        $this->assertInstanceOf(BufferBreakPoint::class, $priorityNode = $body->getNode(2));
+        $this->assertInstanceOf(BreakPoint::class, $priorityNode = $body->getNode(2));
         $this->assertEquals(10, $priorityNode->getAttribute('execution_priority'));
 
         $this->assertInstanceOf(Terminate::class, $node->getNode(2));

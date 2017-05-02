@@ -10,7 +10,7 @@
 namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
 
 /**
- * Class BufferBreakPoint
+ * Class BreakPoint
  *
  * Terminate previous buffer and start new one.
  *
@@ -18,7 +18,7 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer;
  *
  * @internal
  */
-final class BufferBreakPoint extends \Twig_Node
+final class BreakPoint extends \Twig_Node
 {
     /**
      * {@inheritdoc}

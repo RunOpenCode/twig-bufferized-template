@@ -10,7 +10,7 @@
 namespace RunOpenCode\Twig\BufferizedTemplate;
 
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node as BufferizeNode;
-use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferBreakPoint;
+use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
 
@@ -121,12 +121,12 @@ final class NodeVisitor extends \Twig_BaseNodeVisitor
             if ($this->isBufferizingNode($node) || ($node instanceof \Twig_Node_BlockReference && $this->hasBufferizingNode($this->blocks[$node->getAttribute('name')]))) {
 
                 return new \Twig_Node([
-                    new BufferBreakPoint([], [
+                    new BreakPoint([], [
                         'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME,
                         'execution_priority' => $this->settings['default_execution_priority']
                     ]),
                     $node,
-                    new BufferBreakPoint([], [
+                    new BreakPoint([], [
                         'bufferized_context_variable_name' => self::CONTEXT_VARIABLE_NAME,
                         'execution_priority' => $this->getNodeExecutionPriority($node)
                     ])

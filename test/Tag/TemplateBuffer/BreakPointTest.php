@@ -9,17 +9,17 @@
  */
 namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer;
 
-use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BufferBreakPoint;
+use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\BaseNodeTest;
 
-class BufferBreakPointTest extends BaseNodeTest
+class BreakPointTest extends BaseNodeTest
 {
     /**
      * @test
      */
     public function itCompiles()
     {
-        $node = new BufferBreakPoint([], ['execution_priority' => 20, 'bufferized_context_variable_name' => '$_bufferized_context_variable_name']);
+        $node = new BreakPoint([], ['execution_priority' => 20, 'bufferized_context_variable_name' => '$_bufferized_context_variable_name']);
 
         $compiler = $this->getCompiler();
         $compiler->compile($node);

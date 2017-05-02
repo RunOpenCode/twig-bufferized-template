@@ -1,0 +1,7 @@
+{% set some_var = 10 %}
+
+{% bufferize >20 %}
+    {% set some_var = -20 %}
+{% endbufferize %}
+
+Some var: {{ some_var }}

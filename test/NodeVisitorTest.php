@@ -1,5 +1,4 @@
 <?php
-
 /*
  * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
  *
@@ -15,8 +14,8 @@ use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\Node;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
-use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigExtension;
-use RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup\DummyTwigNode;
+use RunOpenCode\Twig\BufferizedTemplate\Tests\Fixtures\Mockup\DummyTwigExtension;
+use RunOpenCode\Twig\BufferizedTemplate\Tests\Fixtures\Mockup\DummyTwigNode;
 use RunOpenCode\Twig\BufferizedTemplate\TwigExtension;
 
 /**

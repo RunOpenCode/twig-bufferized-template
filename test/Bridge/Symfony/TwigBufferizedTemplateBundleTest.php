@@ -13,6 +13,11 @@ use PHPUnit\Framework\TestCase;
 use RunOpenCode\Twig\BufferizedTemplate\Bridge\Symfony\DependencyInjection\Extension;
 use RunOpenCode\Twig\BufferizedTemplate\Bridge\Symfony\TwigBufferizedTemplateBundle;
 
+/**
+ * Class TwigBufferizedTemplateBundleTest
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Bridge\Symfony
+ */
 class TwigBufferizedTemplateBundleTest extends TestCase
 {
     /**

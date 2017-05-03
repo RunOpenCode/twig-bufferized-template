@@ -12,6 +12,11 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Initialize;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\BaseNodeTest;
 
+/**
+ * Class InitializeTest
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer
+ */
 class InitializeTest extends BaseNodeTest
 {
     /**

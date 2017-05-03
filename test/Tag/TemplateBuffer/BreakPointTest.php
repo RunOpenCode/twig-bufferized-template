@@ -12,6 +12,11 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\BreakPoint;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\BaseNodeTest;
 
+/**
+ * Class BreakPointTest
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer
+ */
 class BreakPointTest extends BaseNodeTest
 {
     /**

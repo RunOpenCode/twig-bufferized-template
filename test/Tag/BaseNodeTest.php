@@ -11,6 +11,11 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag;
 
 use PHPUnit\Framework\TestCase;
 
+/**
+ * Class BaseNodeTest
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag
+ */
 abstract class BaseNodeTest extends TestCase
 {
     /**

@@ -7,7 +7,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Mockup;
+namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Fixtures\Mockup;
 
 class DummyTwigNode extends \Twig_Node
 {

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<container
+        xmlns="http://symfony.com/schema/dic/services"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:run-open-code-twig-bufferized-template-bundle="http://www.runopencode.com/xsd-schema/twig-bufferized-template-bundle"
+        xsi:schemaLocation="http://symfony.com/schema/dic/services
+                            http://symfony.com/schema/dic/services/services-1.0.xsd
+                            http://www.runopencode.com/xsd-schema/twig-bufferized-template-bundle
+                            http://www.runopencode.com/xsd-schema/twig-bufferized-template-bundle/configuration-1.0.0.xsd
+                            "
+>
+
+    <run-open-code-twig-bufferized-template-bundle:config>
+
+        <run-open-code-twig-bufferized-template-bundle:node-visitor-priority>-5</run-open-code-twig-bufferized-template-bundle:node-visitor-priority>
+        <run-open-code-twig-bufferized-template-bundle:default-execution-priority>-5</run-open-code-twig-bufferized-template-bundle:default-execution-priority>
+
+        <run-open-code-twig-bufferized-template-bundle:whitelist>template-to-bufferize.html.twig</run-open-code-twig-bufferized-template-bundle:whitelist>
+        <run-open-code-twig-bufferized-template-bundle:blacklist>template-not-to-bufferize.html.twig</run-open-code-twig-bufferized-template-bundle:blacklist>
+        <run-open-code-twig-bufferized-template-bundle:blacklist>additional-template-not-to-bufferize.html.twig</run-open-code-twig-bufferized-template-bundle:blacklist>
+
+        <run-open-code-twig-bufferized-template-bundle:node class="My\Node\Class"/>
+        <run-open-code-twig-bufferized-template-bundle:node class="My\Other\Node\Class">17</run-open-code-twig-bufferized-template-bundle:node>
+            
+    </run-open-code-twig-bufferized-template-bundle:config>
+
+</container>

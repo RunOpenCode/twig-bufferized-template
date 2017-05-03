@@ -1,0 +1,11 @@
+runopencode_twig_bufferized_template:
+    node_visitor_priority: -5
+    default_execution_priority: -5
+    whitelist:
+        - template-to-bufferize.html.twig
+    blacklist:
+        - template-not-to-bufferize.html.twig
+        - additional-template-not-to-bufferize.html.twig
+    nodes:
+        'My\Node\Class': null
+        'My\Other\Node\Class': 17

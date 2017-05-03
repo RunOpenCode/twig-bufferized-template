@@ -14,6 +14,11 @@ use RunOpenCode\Twig\BufferizedTemplate\NodeVisitor;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\Bufferize\TokenParser;
 use RunOpenCode\Twig\BufferizedTemplate\TwigExtension;
 
+/**
+ * Class TwigExtensionTest
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Tests\Twig
+ */
 class TwigExtensionTest extends TestCase
 {
     /**

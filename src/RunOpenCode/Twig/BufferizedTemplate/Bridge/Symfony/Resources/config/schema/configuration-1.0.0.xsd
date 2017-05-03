@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<xsd:schema xmlns="http://www.runopencode.com/xsd-schema/twig-bufferized-template-bundle"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://www.runopencode.com/xsd-schema/twig-bufferized-template-bundle"
+            elementFormDefault="qualified">
+
+    <xsd:element name="config">
+
+        <xsd:complexType>
+
+            <xsd:sequence>
+                <xsd:element name="node-visitor-priority" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="default-execution-priority" type="xsd:integer" minOccurs="0" maxOccurs="1" />
+                <xsd:element name="whitelist" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+                <xsd:element name="blacklist" minOccurs="0" maxOccurs="unbounded" type="xsd:string"/>
+
+
+                <xsd:element name="node" minOccurs="0" maxOccurs="unbounded">
+                    <xsd:complexType mixed="true">
+                        <xsd:attribute name="class" type="xsd:string" use="required" />
+                    </xsd:complexType>
+                </xsd:element>
+
+            </xsd:sequence>
+
+        </xsd:complexType>
+
+    </xsd:element>
+
+</xsd:schema>

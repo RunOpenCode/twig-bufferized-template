@@ -41,6 +41,7 @@
         "sebastian/phpcpd": "dev-master",
         "theseer/phpdox": "dev-master",
         "escapestudios/symfony2-coding-standard": "~2.0",
+        "matthiasnoback/symfony-dependency-injection-test": "~2.0",
         "symfony/symfony": "~2.8|~3.0"
     }
 }

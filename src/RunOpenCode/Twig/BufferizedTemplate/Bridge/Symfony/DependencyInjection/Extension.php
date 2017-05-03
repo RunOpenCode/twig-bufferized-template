@@ -1,5 +1,12 @@
 <?php
-
+/*
+ * This file is part of the Twig Bufferized Template package, an RunOpenCode project.
+ *
+ * (c) 2017 RunOpenCode
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ */
 namespace RunOpenCode\Twig\BufferizedTemplate\Bridge\Symfony\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
@@ -7,8 +14,37 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Extension\Extension as BaseExtension;
 use Symfony\Component\DependencyInjection\Loader\XmlFileLoader;
 
+/**
+ * Class Extension
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Bridge\Symfony\DependencyInjection
+ */
 class Extension extends BaseExtension
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function getAlias()
+    {
+        return "runopencode_twig_bufferized_template";
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getNamespace()
+    {
+        return 'http://www.runopencode.com/xsd-schema/twig-bufferized-template-bundle';
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getXsdValidationBasePath()
+    {
+        return __DIR__.'/../Resources/config/schema';
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -30,29 +66,4 @@ class Extension extends BaseExtension
                 ]);
         }
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getNamespace()
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getXsdValidationBasePath()
-    {
-        return false;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAlias()
-    {
-        return "runopencode_twig_bufferized_template";
-    }
-
 }

@@ -12,6 +12,11 @@ namespace RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer;
 use RunOpenCode\Twig\BufferizedTemplate\Tag\TemplateBuffer\Terminate;
 use RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\BaseNodeTest;
 
+/**
+ * Class TerminateTest
+ *
+ * @package RunOpenCode\Twig\BufferizedTemplate\Tests\Twig\Tag\TemplateBuffer
+ */
 class TerminateTest extends BaseNodeTest
 {
     /**

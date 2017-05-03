@@ -65,13 +65,16 @@ bundle in your `AppKernel`:
 and if you are not satisfied with default extension configuration, you can configure extension in your `config.yml` (again,
 in example below, default configuration is presented):
             
-    run_open_code_twig_bufferized_template:
+    runopencode_twig_bufferized_template:
         nodes: []
         whitelist: []
         blacklist: []
         default_execution_priority: 0
-        nodeVisitorPriority: 0
-        
+        node_visitor_priority: 0
+
+Note that extension can be configured via XML (preferred way), so in that matter, you can
+use provided [XML Schema](src/RunOpenCode/Twig/BufferizedTemplate/Bridge/Symfony/Resources/config/schema/configuration-1.0.0.xsd).
+
 ## How to use extension?
         
 Extension comes with prebuilt Twig tag `{% bufferize [priority] %}`. Tag parameter `priority` is optional, and if ommited,

@@ -32,11 +32,11 @@ default settings):
 
 
     $settings = [
-        'nodes' => [ ],
+        'default_execution_priority' => 0,
+        'node_visitor_priority' => 10,
         'whitelist' => [ ],
         'blacklist' => [ ],
-        'default_execution_priority' => 0,
-        'node_visitor_priority' => 10
+        'nodes' => [ ],
     ];
                    
     $myTwigEnvironment->addExtension(new \RunOpenCode\Twig\BufferizedTemplate\TwigExtension($settings));
@@ -66,11 +66,11 @@ and if you are not satisfied with default extension configuration, you can confi
 in example below, default configuration is presented):
             
     runopencode_twig_bufferized_template:
-        nodes: []
+        node_visitor_priority: 0
+        default_execution_priority: 0
         whitelist: []
         blacklist: []
-        default_execution_priority: 0
-        node_visitor_priority: 0
+        nodes: []
 
 Note that extension can be configured via XML (preferred way), so in that matter, you can
 use provided [XML Schema](src/RunOpenCode/Twig/BufferizedTemplate/Bridge/Symfony/Resources/config/schema/configuration-1.0.0.xsd).
@@ -131,12 +131,12 @@ Bufferization will only work for Twig tags. Don't use it for bufferization of fu
  
 ## Other configuration parameters
 
-- `nodes`: Add other custom Twig tag nodes to template bufferization.
-- `whitelist`: By default, all templates are analysed for bufferization. You can explicitly state which templates should be processed with node visitor, others will be ignored. 
-- `blacklist`: This parameter is oposite of `whitelist`, here you can state which templates should be ignored. You can use either `whitelist` or `blacklist`, but not booth.
-- `default_execution_priority`: Default execution priority of all bufferized template chunks.
 - `node_visitor_priority`: Twig defines priority of node visitors, which ought to be between [-10, 10]. By using value of 10, bufferizing node visitor will be executed as last node visitor
 in process of transforming AST, which is desired behaviour. However, if you need different priority, you can configure that here.
+- `default_execution_priority`: Default execution priority of all bufferized template chunks.
+- `whitelist`: By default, all templates are analysed for bufferization. You can explicitly state which templates should be processed with node visitor, others will be ignored.
+- `blacklist`: This parameter is oposite of `whitelist`, here you can state which templates should be ignored. You can use either `whitelist` or `blacklist`, but not booth.
+- `nodes`: Add other custom Twig tag nodes to template bufferization.
 
 ## How bufferization works?
  
@@ -190,11 +190,9 @@ Of course, same result can be achieved by using some different method, per examp
 However, bufferizing is the one of the options as well.
 
 And to achieve this was not easy task, if you are familiar with Sonata project, see: Sonata base layout, 
-note `{{ sonata_block_include_stylesheets('screen', app.request.basePath) }}` at the bottom - stylesheets are not loaded 
+note
+[`{{sonata_block_include_stylesheets('screen', app.request.basePath)}}`](https://github.com/sonata-project/SonataPageBundle/blob/3.x/Resources/views/base_layout.html.twig#L172) at the bottom - stylesheets are not loaded
 where they should be - in HEAD tag.
 
 Bufferization could provide method for Sonata project (or any other block-like CMS CMF) proper HTML output and full 
 separation of individual block logic that is related to assets management and inclusion.
-
-
-

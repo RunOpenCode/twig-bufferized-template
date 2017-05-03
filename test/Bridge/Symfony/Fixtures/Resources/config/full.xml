@@ -18,7 +18,6 @@
 
         <run-open-code-twig-bufferized-template-bundle:whitelist>template-to-bufferize.html.twig</run-open-code-twig-bufferized-template-bundle:whitelist>
         <run-open-code-twig-bufferized-template-bundle:blacklist>template-not-to-bufferize.html.twig</run-open-code-twig-bufferized-template-bundle:blacklist>
-        <run-open-code-twig-bufferized-template-bundle:blacklist>additional-template-not-to-bufferize.html.twig</run-open-code-twig-bufferized-template-bundle:blacklist>
 
         <run-open-code-twig-bufferized-template-bundle:node class="My\Node\Class"/>
         <run-open-code-twig-bufferized-template-bundle:node class="My\Other\Node\Class">17</run-open-code-twig-bufferized-template-bundle:node>

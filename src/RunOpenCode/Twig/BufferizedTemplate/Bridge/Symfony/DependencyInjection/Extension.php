@@ -57,13 +57,10 @@ class Extension extends BaseExtension
         $loader->load('twig.extension.xml');
 
 
-        if ($container->hasDefinition('runopencode.twig.bufferized_template')) {
-
-            $container
-                ->getDefinition('runopencode.twig.bufferized_template')
-                ->setArguments([
-                    $config
-                ]);
-        }
+        $container
+            ->getDefinition('runopencode.twig.bufferized_template')
+            ->setArguments([
+                $config
+            ]);
     }
 }
